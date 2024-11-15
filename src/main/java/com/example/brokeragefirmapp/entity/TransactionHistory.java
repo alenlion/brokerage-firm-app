@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Table(name = "transactions")
 @Getter
 @Setter
-public class Transaction extends BaseEntity {
+public class TransactionHistory extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
