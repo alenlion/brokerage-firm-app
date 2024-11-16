@@ -22,7 +22,7 @@ public class Customer extends BaseEntity {
     private Long id;
 
     @NotBlank(message = "Username is required")
-    @Column(unique = true)
+    @Column(unique = true,updatable = false)
     private String username;
 
     @NotBlank(message = "Password is required")

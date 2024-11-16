@@ -7,17 +7,16 @@ package com.example.brokeragefirmapp.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "assets", indexes = {
-        @Index(name = "idx_customer_id", columnList = "customerId"),
-        @Index(name = "idx_asset_name", columnList = "assetName")
-})
+@Table(name = "assets")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Asset extends BaseEntity {
 
     @Id
@@ -29,10 +28,18 @@ public class Asset extends BaseEntity {
     private String assetName;
 
     private BigDecimal size;
+
     private BigDecimal usableSize;
 
     @Version
     private Long version;
+
+    public Asset( Long customerId, String assetName, BigDecimal size, BigDecimal usableSize ) {
+        this.customerId = customerId;
+        this.assetName = assetName;
+        this.size = size;
+        this.usableSize = usableSize;
+    }
 
 }
 

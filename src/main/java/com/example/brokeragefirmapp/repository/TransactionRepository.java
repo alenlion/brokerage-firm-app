@@ -1,6 +1,6 @@
 package com.example.brokeragefirmapp.repository;
 
-import com.example.brokeragefirmapp.entity.Transaction;
+import com.example.brokeragefirmapp.entity.TransactionHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -10,6 +10,6 @@ import java.util.List;
  * @since 11/15/2024
  */
 
-public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    List<Transaction> findByCustomerId( Long customerId);
+public interface TransactionRepository extends JpaRepository<TransactionHistory, Long> {
+    List<TransactionHistory> findByCustomerId( Long customerId);
 }
