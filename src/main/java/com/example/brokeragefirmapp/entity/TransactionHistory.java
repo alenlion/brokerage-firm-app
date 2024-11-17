@@ -27,6 +27,7 @@ public class TransactionHistory extends BaseEntity {
     @Enumerated( EnumType.STRING)
     private TransactionType transactionType; // DEPOSIT, WITHDRAWAL
 
+    @Column(precision = 10, scale = 2)
     private BigDecimal amount;
 
     private String iban; // Applicable for withdrawals
