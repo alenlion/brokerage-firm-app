@@ -6,6 +6,7 @@ package com.example.brokeragefirmapp.entity;
  */
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,14 +26,14 @@ public class Asset extends BaseEntity {
 
     private Long customerId;
 
+    @NotBlank(message = "assetName is required")
     private String assetName;
 
+    @Column(precision = 10, scale = 2)
     private BigDecimal size;
 
+    @Column(precision = 10, scale = 2)
     private BigDecimal usableSize;
-
-    @Version
-    private Long version;
 
     public Asset( Long customerId, String assetName, BigDecimal size, BigDecimal usableSize ) {
         this.customerId = customerId;
