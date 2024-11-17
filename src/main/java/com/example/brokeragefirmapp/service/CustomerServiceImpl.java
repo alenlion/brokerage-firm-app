@@ -5,6 +5,7 @@ import com.example.brokeragefirmapp.entity.Customer;
 import com.example.brokeragefirmapp.exception.ResourceNotFoundException;
 import com.example.brokeragefirmapp.mapper.CustomerMapper;
 import com.example.brokeragefirmapp.repository.CustomerRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
