@@ -10,6 +10,7 @@ import com.example.brokeragefirmapp.exception.InsufficientBalanceException;
 import com.example.brokeragefirmapp.mapper.AssetMapper;
 import com.example.brokeragefirmapp.repository.AssetRepository;
 import com.example.brokeragefirmapp.repository.TransactionRepository;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
  */
 
 @Service
+@Transactional
 public class AssetServiceImpl implements AssetService {
 
     private static final Logger logger = LoggerFactory.getLogger( AssetService.class );
@@ -81,5 +83,19 @@ public class AssetServiceImpl implements AssetService {
         assetRepository.save( tryAsset );
         logger.info( "Withdrew {} TRY for customer ID: {} to IBAN: {}", withdrawRequest.getAmount(), withdrawRequest.getCustomerId(), withdrawRequest.getIban() ); // Record the transaction Transaction transaction = new Transaction(); transaction.setCustomerId(customerId); transaction.setTransactionType(TransactionType.WITHDRAWAL); transaction.setAmount(amount); transaction.setIban(iban); transactionService.recordTransaction(transaction); }
 
+    }
+
+    public AssetDTO getAsset( Long customerId, String assetName ) {
+        Asset tryAsset = assetRepository.findByCustomerIdAndAssetName( customerId, assetName ).orElse( null );
+        return assetMapper.toDTO( tryAsset );
+    }
+    public Boolean assetIsExist( String assetName ) {
+        return assetRepository.countAssetByAssetName( assetName ) != 0;
+    }
+
+    @Override
+    public AssetDTO saveAsset( AssetDTO asset ) {
+        Asset tryAsset =  assetRepository.save( assetMapper.toEntity( asset ) );
+        return assetMapper.toDTO( tryAsset );
     }
 }
