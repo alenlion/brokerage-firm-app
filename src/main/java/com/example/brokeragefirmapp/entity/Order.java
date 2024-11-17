@@ -28,14 +28,22 @@ public class Order extends BaseEntity {
     private Long id;
 
     private Long customerId;
+    
     private String assetName;
 
     @Enumerated( EnumType.STRING)
     private OrderSide orderSide; // BUY or SELL
 
+    @Column(precision = 10, scale = 2)
     private BigDecimal size;
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal orderSize;
+
+    @Column(precision = 10, scale = 2)
     private BigDecimal price;
 
     @Enumerated(EnumType.STRING)
+
     private OrderStatus status; // PENDING, MATCHED, CANCELED
 }
