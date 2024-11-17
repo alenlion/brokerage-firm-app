@@ -12,9 +12,16 @@ import java.util.List;
  */
 
 public interface AssetService {
+
     List<AssetDTO> listAssets( Long customerId );
 
     void depositMoney( DepositRequestDTO depositRequest );
 
     void withdrawMoney( WithdrawRequestDTO withdrawRequest );
+
+    AssetDTO getAsset( Long customerId, String assetName );
+
+    Boolean assetIsExist( String assetName );
+
+    AssetDTO saveAsset( AssetDTO assetDTO );
 }
