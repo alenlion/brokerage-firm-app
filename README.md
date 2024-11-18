@@ -18,7 +18,7 @@ This project is a Spring Boot application designed to simulate a brokerage firm.
 
 1. **Clone the repository**
    ```sh
-   git clone <repository-url>
+   git clone https://github.com/alenlion/brokerage-firm-app.git
    cd brokerage-firm-app
    ```
 
