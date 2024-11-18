@@ -38,7 +38,4 @@ public abstract class BaseEntity {
     @LastModifiedDate
     private LocalDateTime modifyDate;
 
-//    @Version
-//    private Long version;
-
 }
