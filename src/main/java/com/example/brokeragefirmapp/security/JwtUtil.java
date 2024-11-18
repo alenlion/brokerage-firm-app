@@ -21,7 +21,7 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    private final Key SECRET_KEY = Keys.hmacShaKeyFor("your_secret_key_which_should_be_longer_than_256_bits_and_kept_secret".getBytes());
+    private final Key SECRET_KEY = Keys.hmacShaKeyFor("6f8f57715090da2632453988d9e7bc556a6b7b4e832f467f8f6b2b3e2f9a135e".getBytes());
 
     private final long EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
