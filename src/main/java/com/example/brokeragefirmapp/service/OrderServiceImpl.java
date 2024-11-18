@@ -243,6 +243,9 @@ public class OrderServiceImpl implements OrderService {
         if ( order.getOrderSide() == OrderSide.SELL ) {
             order.setSize( remainingSize );
         }
+        if ( order.getOrderSide() == OrderSide.BUY ) {
+            order.setSize( order.getSize().subtract( tradeSize ) );
+        }
         // Update status if the order is fully matched
         if ( remainingSize.compareTo( BigDecimal.ZERO ) == 0 || remainingSize.compareTo( new BigDecimal( "0.0001" ) ) <= 0 ) {
             order.setStatus( OrderStatus.MATCHED );
