@@ -8,12 +8,12 @@ import com.example.brokeragefirmapp.enums.OrderSide;
 import com.example.brokeragefirmapp.enums.OrderStatus;
 import com.example.brokeragefirmapp.exception.InsufficientBalanceException;
 import com.example.brokeragefirmapp.exception.OrderNotFoundException;
+import com.example.brokeragefirmapp.exception.ResourceNotFoundException;
 import com.example.brokeragefirmapp.mapper.OrderMapper;
 import com.example.brokeragefirmapp.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.lang.module.ResolutionException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
 
     public OrderDTO createOrder( OrderDTO order ) {
         if ( !assetService.assetIsExist( order.getAssetName() ) ) {
-            throw new ResolutionException( "Asset not found" );
+            throw new ResourceNotFoundException( "Asset not found" );
         }
         Long customerId = order.getCustomerId();
         String assetName = order.getAssetName();
