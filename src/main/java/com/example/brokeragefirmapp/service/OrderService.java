@@ -2,6 +2,7 @@ package com.example.brokeragefirmapp.service;
 
 import com.example.brokeragefirmapp.dto.OrderCreateRequest;
 import com.example.brokeragefirmapp.dto.OrderDTO;
+import com.example.brokeragefirmapp.entity.Order;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,5 +18,7 @@ public interface OrderService {
     void createOrder( OrderCreateRequest orderRequest );
 
     List<OrderDTO> listOrders( Long customerId, LocalDateTime startDate, LocalDateTime endDate );
-    //  void cancelOrder(Long orderId, String loggedInUsername);
+
+    void cancelOrder( Long orderId );
+    Order findOrderById( Long orderId );
 }

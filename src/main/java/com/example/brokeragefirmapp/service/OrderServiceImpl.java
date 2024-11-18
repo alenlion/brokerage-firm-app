@@ -318,4 +318,9 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus( OrderStatus.CANCELED );
         orderRepository.save( order );
     }
+
+    @Override
+    public Order findOrderById( Long orderId ) {
+        return orderRepository.findById( orderId ).orElseThrow( () -> new OrderNotFoundException( "Order not found" ) );
+    }
 }

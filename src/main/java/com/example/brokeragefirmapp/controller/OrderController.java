@@ -4,12 +4,14 @@ import com.example.brokeragefirmapp.dto.ApiResponse;
 import com.example.brokeragefirmapp.dto.OrderDTO;
 import com.example.brokeragefirmapp.service.OrderService;
 import jakarta.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -28,7 +30,7 @@ public class OrderController {
     }
 
     @PostMapping
-    @PreAuthorize( "hasRole('ADMIN') or #orderDTO.customerId.toString() == principal" )
+    @PreAuthorize( "hasRole('ADMIN') or #orderDTO.customerId == @userService.getCurrentUserId()" )
     public ResponseEntity<ApiResponse<OrderDTO>> createOrder( @Valid @RequestBody OrderDTO orderDTO ) {
         OrderDTO createdOrder = orderService.createOrder( orderDTO );
         ApiResponse<OrderDTO> response = new ApiResponse<>( true, "Order created successfully", createdOrder );
@@ -36,23 +38,23 @@ public class OrderController {
     }
 
     @GetMapping
-    @PreAuthorize( "hasRole('ADMIN') or #customerId.toString() == principal" )
+    @PreAuthorize( "hasRole('ADMIN') or #customerId == @userService.getCurrentUserId()" )
     public ResponseEntity<ApiResponse<List<OrderDTO>>> listOrders(
             @RequestParam Long customerId,
-            @RequestParam LocalDateTime startDate,
-            @RequestParam LocalDateTime endDate ) {
-        List<OrderDTO> orders = orderService.listOrders( customerId, startDate, endDate );
+            @RequestParam @DateTimeFormat( iso = DateTimeFormat.ISO.DATE ) LocalDate startDate,
+            @RequestParam @DateTimeFormat( iso = DateTimeFormat.ISO.DATE ) LocalDate endDate ) {
+        List<OrderDTO> orders = orderService.listOrders( customerId, startDate.atStartOfDay(), endDate.atTime( LocalTime.MAX ) );
         ApiResponse<List<OrderDTO>> response = new ApiResponse<>( true, "Orders retrieved successfully", orders );
         return ResponseEntity.ok( response );
     }
 
-//    @DeleteMapping("/{orderId}")
-//    @PreAuthorize("hasRole('ADMIN') or @orderSecurity.isOrderOwner(#orderId, principal)")
-//    public ResponseEntity<ApiResponse<Void>> cancelOrder(@PathVariable Long orderId) {
-//        String username = SecurityUtils.getCurrentUsername();
-//        orderService.cancelOrder(orderId, username);
-//        ApiResponse<Void> response = new ApiResponse<>(true, "Order canceled successfully", null);
-//        return ResponseEntity.ok(response);
-//    }
+    @DeleteMapping( "/{orderId}" )
+    @PreAuthorize( "hasRole('ADMIN') or @userService.isOrderOwner(#orderId)" )
+    public ResponseEntity<ApiResponse<Void>> cancelOrder( @PathVariable Long orderId ) {
+
+        orderService.cancelOrder( orderId );
+        ApiResponse<Void> response = new ApiResponse<>( true, "Order canceled successfully", null );
+        return ResponseEntity.ok( response );
+    }
 }
 
